@@ -33,6 +33,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ role, isCollapsed, onToggle })
     parent: 'Responsável',
   };
 
+  const profileRoutes: Record<string, string> = {
+    student: '/student/profile',
+    parent: '/parent/profile-page',
+    teacher: '/teacher/profile',
+  };
+
+  const profilePath = profileRoutes[role];
+
   return (
     <aside 
       className={`
@@ -71,7 +79,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ role, isCollapsed, onToggle })
 
       <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1 custom-scrollbar">
         {items.map((item) => {
-          const isActive = location.pathname === item.path || (item.path !== `/${role}` && location.pathname.startsWith(item.path));
+          const isRoleRoot = item.path === `/${role}` || item.path === `/app/${role}`;
+          const isActive = location.pathname === item.path || (!isRoleRoot && location.pathname.startsWith(item.path));
           
           return (
             <button
@@ -122,11 +131,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ role, isCollapsed, onToggle })
           <span className="text-lg shrink-0">{theme === 'light' ? '☀️' : '🌙'}</span>
         </button>
 
-        <div 
+        <button
+          type="button"
+          onClick={() => profilePath && navigate(profilePath)}
+          disabled={!profilePath}
           className={`
-            flex items-center gap-3 p-2 rounded-xl bg-muted border border-border transition-all duration-300
+            w-full flex items-center gap-3 p-2 rounded-xl bg-muted border border-border transition-all duration-300 text-left
+            hover:bg-accent active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70
             ${isCollapsed ? 'justify-center bg-transparent border-transparent' : ''}
           `}
+          title={profilePath ? 'Ir para perfil' : ''}
         >
           <Avatar className="w-8 h-8 shrink-0">
             <AvatarImage src={profile?.avatar_url || undefined} alt={displayName} />
@@ -145,7 +159,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ role, isCollapsed, onToggle })
               {roleLabels[role] || role}
             </p>
           </div>
-        </div>
+        </button>
       </div>
     </aside>
   );

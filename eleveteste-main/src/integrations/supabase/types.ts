@@ -348,6 +348,8 @@ export type Database = {
           avatar_url: string | null
           created_at: string | null
           email: string | null
+          family_join_intent: string
+          family_link_status: string
           full_name: string
           grade_year: string | null
           id: string
@@ -361,6 +363,8 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string | null
           email?: string | null
+          family_join_intent?: string
+          family_link_status?: string
           full_name: string
           grade_year?: string | null
           id: string
@@ -374,6 +378,8 @@ export type Database = {
           avatar_url?: string | null
           created_at?: string | null
           email?: string | null
+          family_join_intent?: string
+          family_link_status?: string
           full_name?: string
           grade_year?: string | null
           id?: string

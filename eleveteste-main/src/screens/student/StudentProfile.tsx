@@ -43,7 +43,7 @@ export const StudentProfile = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/student')}
+            onClick={() => navigate('/app/student')}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>

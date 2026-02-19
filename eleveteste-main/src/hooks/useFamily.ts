@@ -1,7 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from './useAuth';
-import { useCallback, useEffect } from 'react';
 
 // IMPORTANTE: Frontend NÃO faz INSERT direto em families/family_members
 // Todas as operações de família devem usar as RPCs:
@@ -9,7 +8,7 @@ import { useCallback, useEffect } from 'react';
 // - join_family_by_code(profile_id, code)
 
 export const useFamily = () => {
-  const { user, roles } = useAuth();
+  const { user, profile, refetchProfile } = useAuth();
   const queryClient = useQueryClient();
 
   const familyQuery = useQuery({
@@ -71,8 +70,18 @@ export const useFamily = () => {
       if (error) throw error;
       return data as string;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      if (user) {
+        await supabase
+          .from('profiles')
+          .update({
+            family_link_status: 'linked',
+            family_join_intent: 'create',
+          })
+          .eq('id', user.id);
+      }
       queryClient.invalidateQueries({ queryKey: ['family'] });
+      await refetchProfile();
     },
   });
 
@@ -88,27 +97,38 @@ export const useFamily = () => {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      if (user) {
+        await supabase
+          .from('profiles')
+          .update({
+            family_link_status: 'linked',
+            family_join_intent: 'join_now',
+          })
+          .eq('id', user.id);
+      }
       queryClient.invalidateQueries({ queryKey: ['family'] });
       queryClient.invalidateQueries({ queryKey: ['family-children-count'] });
+      await refetchProfile();
     },
   });
 
-  // Auto-create family for parent if they don't have one
-  const ensureFamilyExists = useCallback(async () => {
-    const isParent = roles?.includes('parent');
-    if (!isParent) return;
-    if (familyQuery.data) return; // Already has family
-    if (familyQuery.isLoading) return; // Still loading
-    if (createFamilyMutation.isPending) return; // Already creating
-    
-    try {
-      await createFamilyMutation.mutateAsync();
-    } catch (error) {
-      // Silently fail - user might already belong to a family
-      console.log('Family creation skipped:', error);
-    }
-  }, [familyQuery.data, familyQuery.isLoading, createFamilyMutation, roles]);
+  const setFamilyJoinIntent = async (
+    intent: 'create' | 'join_now' | 'join_later' | 'unset',
+    linkStatus: 'linked' | 'pending' | 'none' = 'none'
+  ) => {
+    if (!user) return;
+    await supabase
+      .from('profiles')
+      .update({
+        family_join_intent: intent,
+        family_link_status: linkStatus,
+      })
+      .eq('id', user.id);
+    await refetchProfile();
+  };
+
+  const needsFamilyLink = profile?.family_link_status !== 'linked';
 
   return {
     family: familyQuery.data,
@@ -119,6 +139,7 @@ export const useFamily = () => {
     isCreating: createFamilyMutation.isPending,
     joinFamily: joinFamilyMutation.mutateAsync,
     isJoining: joinFamilyMutation.isPending,
-    ensureFamilyExists,
+    setFamilyJoinIntent,
+    needsFamilyLink,
   };
 };

@@ -13,7 +13,7 @@ export const ParentCode = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { user, refetchProfile } = useAuth();
-  const { joinFamily, isJoining } = useFamily();
+  const { joinFamily, isJoining, setFamilyJoinIntent } = useFamily();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,25 +21,21 @@ export const ParentCode = () => {
 
     setLoading(true);
     try {
+      await setFamilyJoinIntent('join_now', 'pending');
       await joinFamily(code.trim().toUpperCase());
-      
-      // Marcar onboarding como completo
-      await supabase
-        .from('profiles')
-        .update({ onboarding_completed: true })
-        .eq('id', user.id);
 
+      await supabase.from('profiles').update({ onboarding_completed: true }).eq('id', user.id);
       await refetchProfile();
-      
+
       toast({
         title: 'Sucesso!',
-        description: 'Você entrou na família.',
+        description: 'Voce entrou na familia.',
       });
-      navigate('/parent');
+      navigate('/app/guardian');
     } catch (error: any) {
       toast({
         title: 'Erro',
-        description: error.message || 'Código inválido ou não encontrado',
+        description: error.message || 'Codigo invalido ou nao encontrado',
         variant: 'destructive',
       });
     } finally {
@@ -53,8 +49,8 @@ export const ParentCode = () => {
     <OnboardingLayout
       step={3}
       totalSteps={3}
-      title="Digite o código familiar"
-      subtitle="Peça o código para o responsável que criou a família"
+      title="Digite o codigo familiar"
+      subtitle="Peca o codigo para o responsavel que criou a familia"
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         <Input
@@ -65,13 +61,9 @@ export const ParentCode = () => {
           maxLength={6}
           disabled={isLoading}
         />
-        
-        <Button
-          type="submit"
-          className="w-full h-12 text-lg"
-          disabled={isLoading || code.trim().length < 6}
-        >
-          {isLoading ? 'Entrando...' : 'Entrar na família'}
+
+        <Button type="submit" className="w-full h-12 text-lg" disabled={isLoading || code.trim().length < 6}>
+          {isLoading ? 'Entrando...' : 'Entrar na familia'}
         </Button>
       </form>
     </OnboardingLayout>

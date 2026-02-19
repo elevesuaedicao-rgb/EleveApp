@@ -86,6 +86,8 @@ export default {
         "4xl": "2rem",
       },
       fontFamily: {
+        display: ["Montserrat", "Segoe UI", "sans-serif"],
+        body: ["Open Sans", "Segoe UI", "sans-serif"],
         sans: [
           "-apple-system",
           "BlinkMacSystemFont",

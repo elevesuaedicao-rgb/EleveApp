@@ -36,7 +36,7 @@ export const ParentProfilePage = () => {
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => navigate('/parent')}
+            onClick={() => navigate('/app/guardian')}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>

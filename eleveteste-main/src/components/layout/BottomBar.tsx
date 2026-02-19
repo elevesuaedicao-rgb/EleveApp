@@ -18,7 +18,8 @@ export const BottomBar: React.FC<BottomBarProps> = ({ role }) => {
         <div className="grid grid-cols-5 h-16 px-1 relative">
           
           {displayItems.map((item, index) => {
-            const isActive = location.pathname === item.path || (item.path !== `/${role}` && location.pathname.startsWith(item.path));
+            const isRoleRoot = item.path === `/${role}` || item.path === `/app/${role}`;
+            const isActive = location.pathname === item.path || (!isRoleRoot && location.pathname.startsWith(item.path));
             const isCenter = index === 2;
 
             return (

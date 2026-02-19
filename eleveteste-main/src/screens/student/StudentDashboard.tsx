@@ -37,7 +37,7 @@ export const StudentDashboard: React.FC = () => {
         </div>
 
         <button 
-          onClick={() => navigate('/student/profile')}
+          onClick={() => navigate('/app/student/profile')}
           className="relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
@@ -55,7 +55,7 @@ export const StudentDashboard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
         <button 
-          onClick={() => navigate('/student/booking')}
+          onClick={() => navigate('/app/student/booking')}
           className="md:col-span-2 lg:col-span-1 bg-gradient-to-br from-foreground to-foreground/80 dark:from-primary dark:to-blue-700 text-background dark:text-primary-foreground p-8 rounded-[2.5rem] shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group text-left"
         >
           <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500">
@@ -79,7 +79,7 @@ export const StudentDashboard: React.FC = () => {
         </button>
 
         <button 
-          onClick={() => navigate('/student/exams')}
+          onClick={() => navigate('/app/student/exams')}
           className="bg-surface p-8 rounded-[2.5rem] border border-border shadow-sm hover:shadow-xl hover:border-purple-200 dark:hover:border-purple-900 hover:-translate-y-1 transition-all duration-300 text-left group flex flex-col justify-between"
         >
           <div className="space-y-4">
@@ -97,7 +97,7 @@ export const StudentDashboard: React.FC = () => {
         </button>
 
         <button 
-          onClick={() => navigate('/student/history')}
+          onClick={() => navigate('/app/student/history')}
           className="bg-surface p-8 rounded-[2.5rem] border border-border shadow-sm hover:shadow-xl hover:border-orange-200 dark:hover:border-orange-900 hover:-translate-y-1 transition-all duration-300 text-left group flex flex-col justify-between"
         >
           <div className="space-y-4">

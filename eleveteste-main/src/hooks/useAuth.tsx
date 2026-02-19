@@ -10,9 +10,12 @@ interface Profile {
   email: string;
   avatar_url: string | null;
   onboarding_completed: boolean;
+  family_link_status: 'linked' | 'pending' | 'none';
+  family_join_intent: 'create' | 'join_now' | 'join_later' | 'unset';
   school_id: string | null;
   grade_year: string | null;
   age: number | null;
+  phone: string | null;
 }
 
 interface AuthContextType {

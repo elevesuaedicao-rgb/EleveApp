@@ -6,24 +6,24 @@ export interface NavItem {
 
 export const NAV_ITEMS: Record<string, NavItem[]> = {
   student: [
-    { label: 'Dúvidas', path: '/student/questions', icon: '❓' },
-    { label: 'Provas', path: '/student/exams', icon: '📝' },
-    { label: 'Início', path: '/student', icon: '🏠' },
-    { label: 'Agendar', path: '/student/booking', icon: '📅' },
-    { label: 'Estudar', path: '/student/subjects', icon: '📚' },
+    { label: 'Inicio', path: '/app/student', icon: 'I' },
+    { label: 'Agenda', path: '/app/student/booking', icon: 'A' },
+    { label: 'Conhecimento', path: '/app/student/knowledge', icon: 'K' },
+    { label: 'Historico', path: '/app/student/history', icon: 'H' },
+    { label: 'Chat', path: '/app/student/questions', icon: 'C' },
   ],
   parent: [
-    { label: 'Aulas', path: '/parent/classes', icon: '📅' },
-    { label: 'Provas', path: '/parent/exams', icon: '📝' },
-    { label: 'Início', path: '/parent', icon: '🏠' },
-    { label: 'Financeiro', path: '/parent/finance', icon: '💲' },
-    { label: 'Histórico', path: '/parent/history', icon: '📜' },
+    { label: 'Agenda', path: '/app/guardian/students', icon: '??' },
+    { label: 'Chat', path: '/app/guardian/chat', icon: '??' },
+    { label: 'Inicio', path: '/app/guardian', icon: '??' },
+    { label: 'Financeiro', path: '/app/guardian/finance', icon: '??' },
+    { label: 'Alunos', path: '/app/guardian/students', icon: '????????' },
   ],
   teacher: [
-    { label: 'Painel', path: '/teacher', icon: '📊' },
-    { label: 'Dúvidas', path: '/teacher/questions', icon: '❓' },
-    { label: 'Agenda', path: '/teacher/calendar', icon: '📅' },
-    { label: 'Alunos', path: '/teacher/students', icon: '👥' },
-    { label: 'Aprovações', path: '/teacher/approvals', icon: '✅' },
-  ]
+    { label: 'Painel', path: '/teacher', icon: '??' },
+    { label: 'Duvidas', path: '/teacher/questions', icon: '?' },
+    { label: 'Agenda', path: '/teacher/calendar', icon: '??' },
+    { label: 'Alunos', path: '/teacher/students', icon: '??' },
+    { label: 'Aprovacoes', path: '/teacher/approvals', icon: '?' },
+  ],
 };

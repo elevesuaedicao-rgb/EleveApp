@@ -169,6 +169,12 @@ export const StudentBooking: React.FC = () => {
                     </div>
                     <p className="text-muted-foreground text-sm">{slot.date} às {slot.start_time.slice(0, 5)}</p>
                     {booking.topics && <p className="text-xs text-muted-foreground mt-1">{booking.topics.join(', ')}</p>}
+                    <button
+                      onClick={() => navigate(`/app/student/lessons/${booking.id}`)}
+                      className="mt-2 text-xs font-semibold text-primary"
+                    >
+                      Vincular subassunto
+                    </button>
                   </div>
                 </div>
               );

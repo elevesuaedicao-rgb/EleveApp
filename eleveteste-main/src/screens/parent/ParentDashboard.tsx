@@ -1,23 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParent } from './ParentLayout';
 import { useAuth } from '@/hooks/useAuth';
-import { useFamily } from '@/hooks/useFamily';
 import { FamilyCodeBanner } from '@/components/FamilyCodeBanner';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export const ParentDashboard: React.FC = () => {
   const { selectedChild, hasChildren, isLoading: isLoadingChildren } = useParent();
   const { profile } = useAuth();
-  const { ensureFamilyExists } = useFamily();
   const navigate = useNavigate();
 
   const firstName = profile?.full_name?.split(' ')[0] || 'Responsável';
-
-  // Ensure family exists when parent loads dashboard
-  useEffect(() => {
-    ensureFamilyExists();
-  }, [ensureFamilyExists]);
 
   return (
     <div className="space-y-8 animate-in fade-in duration-700 pb-20">

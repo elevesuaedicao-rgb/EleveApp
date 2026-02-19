@@ -15,10 +15,10 @@ export const DashboardRouter: React.FC = () => {
       
       switch (primaryRole) {
         case 'student':
-          navigate('/student', { replace: true });
+          navigate('/app/student', { replace: true });
           break;
         case 'parent':
-          navigate('/parent', { replace: true });
+          navigate('/app/guardian', { replace: true });
           break;
         case 'teacher':
           navigate('/teacher', { replace: true });

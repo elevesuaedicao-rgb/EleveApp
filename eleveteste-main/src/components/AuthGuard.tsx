@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { isDevNavigationEnabled } from '@/lib/devNavigation';
 
 interface AuthGuardProps {
   children: ReactNode;
@@ -10,14 +11,17 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
   const { session, roles, profile, loading } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const devNavigationEnabled = isDevNavigationEnabled();
 
   useEffect(() => {
+    if (devNavigationEnabled) return;
     if (loading) return;
 
     const isWelcomePage = location.pathname === '/welcome';
     const isLoginPage = location.pathname === '/login';
+    const isRealLoginPage = location.pathname === '/auth/login';
     const isOnboardingPage = location.pathname.startsWith('/onboarding');
-    const isPublicPage = isWelcomePage || isLoginPage;
+    const isPublicPage = isWelcomePage || isLoginPage || isRealLoginPage;
 
     // Se não tem sessão e não está em páginas públicas, redireciona para welcome
     if (!session) {
@@ -66,7 +70,7 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
       
       // Verifica se o usuário está tentando acessar uma área não permitida
       const isStudentRoute = currentPath.startsWith('/student');
-      const isParentRoute = currentPath.startsWith('/parent');
+      const isParentRoute = currentPath.startsWith('/parent') || currentPath.startsWith('/app/guardian');
       const isTeacherRoute = currentPath.startsWith('/teacher');
       
       if (isStudentRoute && primaryRole !== 'student') {
@@ -83,9 +87,9 @@ export const AuthGuard = ({ children }: AuthGuardProps) => {
       }
     }
 
-  }, [session, roles, profile, loading, navigate, location.pathname]);
+  }, [session, roles, profile, loading, navigate, location.pathname, devNavigationEnabled]);
 
-  if (loading) {
+  if (loading && !devNavigationEnabled) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>

@@ -10,8 +10,8 @@ export const AppShell: React.FC = () => {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const getActiveRole = (): string => {
-    if (location.pathname.startsWith('/student')) return 'student';
-    if (location.pathname.startsWith('/parent')) return 'parent';
+    if (location.pathname.startsWith('/student') || location.pathname.startsWith('/app/student')) return 'student';
+    if (location.pathname.startsWith('/parent') || location.pathname.startsWith('/app/guardian')) return 'parent';
     if (location.pathname.startsWith('/teacher')) return 'teacher';
     return '';
   };
