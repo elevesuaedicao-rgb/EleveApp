@@ -1,0 +1,145 @@
+.guardian-eleve-calendar {
+  --eleve-night: #0b1329;
+  --eleve-deep: #121a3a;
+  --eleve-primary: #2f6cff;
+  --eleve-primary-soft: #79a8ff;
+  --eleve-surface: #f7f9ff;
+  --eleve-chip: #f4d68a;
+  --eleve-text: #0f172a;
+  color: var(--eleve-text);
+}
+
+.guardian-eleve-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(150% 120% at 105% 0%, rgba(121, 168, 255, 0.45) 0%, rgba(121, 168, 255, 0) 40%),
+    radial-gradient(90% 80% at 0% 100%, rgba(47, 108, 255, 0.45) 0%, rgba(47, 108, 255, 0) 45%),
+    linear-gradient(140deg, var(--eleve-night) 0%, var(--eleve-deep) 65%, #152654 100%);
+  box-shadow: 0 28px 44px -24px rgba(11, 19, 41, 0.85);
+}
+
+.guardian-eleve-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+  background-size: 2px 2px;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.guardian-eleve-logo {
+  filter: brightness(0) invert(1);
+}
+
+.guardian-eleve-chip {
+  min-height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(11, 19, 41, 0.18);
+  background: #ffffff;
+  color: #27324b;
+  font-weight: 600;
+  transition: all 180ms ease;
+}
+
+.guardian-eleve-chip[data-active='true'] {
+  border-color: rgba(47, 108, 255, 0.5);
+  background: rgba(47, 108, 255, 0.12);
+  color: #1742b8;
+}
+
+.guardian-eleve-chip:focus-visible {
+  outline: 2px solid rgba(47, 108, 255, 0.65);
+  outline-offset: 2px;
+}
+
+.guardian-eleve-day {
+  min-height: 140px;
+  border-radius: 1.2rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #ffffff;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.guardian-eleve-day:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 20px -18px rgba(15, 23, 42, 0.75);
+}
+
+.guardian-eleve-day[data-selected='true'] {
+  border-color: rgba(47, 108, 255, 0.45);
+  background: linear-gradient(180deg, rgba(47, 108, 255, 0.12) 0%, rgba(255, 255, 255, 1) 85%);
+}
+
+.guardian-eleve-day[data-today='true'] {
+  box-shadow: 0 0 0 1px rgba(121, 168, 255, 0.8);
+}
+
+.guardian-eleve-day:focus-visible {
+  outline: 2px solid rgba(47, 108, 255, 0.65);
+  outline-offset: 2px;
+}
+
+.guardian-eleve-slot {
+  border-radius: 1.3rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #ffffff;
+  box-shadow: 0 16px 28px -26px rgba(15, 23, 42, 0.85);
+}
+
+.guardian-eleve-slot-tag {
+  border-radius: 999px;
+  padding: 0.25rem 0.72rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.guardian-eleve-slot-tag--online {
+  background: rgba(47, 108, 255, 0.14);
+  color: #1f4dbf;
+}
+
+.guardian-eleve-slot-tag--presencial {
+  background: rgba(15, 23, 42, 0.1);
+  color: #25324f;
+}
+
+.guardian-eleve-slot-tag--ambos {
+  background: rgba(244, 214, 138, 0.55);
+  color: #5f490f;
+}
+
+.guardian-eleve-slot-status {
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.guardian-eleve-slot-status--livre {
+  background: rgba(22, 163, 74, 0.13);
+  color: #166534;
+}
+
+.guardian-eleve-slot-status--ocupado {
+  background: rgba(234, 179, 8, 0.2);
+  color: #8a5b07;
+}
+
+.guardian-eleve-slot-status--indisponivel {
+  background: rgba(100, 116, 139, 0.18);
+  color: #334155;
+}
+
+.guardian-eleve-cta {
+  min-height: 44px;
+  border-radius: 0.9rem;
+  font-weight: 700;
+}
+
+.guardian-eleve-cta:focus-visible {
+  outline: 2px solid rgba(47, 108, 255, 0.65);
+  outline-offset: 2px;
+}

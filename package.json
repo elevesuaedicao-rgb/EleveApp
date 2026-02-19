@@ -1,0 +1,10 @@
+{
+  "name": "eleveteste-main-runner",
+  "private": true,
+  "scripts": {
+    "install": "npm --prefix ./eleveteste-main install",
+    "dev": "npm --prefix ./eleveteste-main run dev",
+    "build": "npm --prefix ./eleveteste-main run build",
+    "preview": "npm --prefix ./eleveteste-main run preview"
+  }
+}
