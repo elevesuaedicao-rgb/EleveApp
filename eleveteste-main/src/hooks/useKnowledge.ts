@@ -367,7 +367,7 @@ const mergeUnitProgress = (
 
 const resolveKnowledgeUnits = (store: KnowledgeStore) => [...KNOWLEDGE_UNITS, ...store.customUnits];
 
-const resolveKnowledgeTopics = (store: KnowledgeStore) => [...KNOWLEDGE_TOPICS, ...store.customTopics];
+import { generateId } from "@/lib/utils";
 
 export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
   const queryClient = useQueryClient();
@@ -403,12 +403,12 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
     () =>
       studentId
         ? allSessions
-            .filter((session) => session.studentId === studentId)
-            .sort((a, b) => {
-              const left = a.endedAt ?? a.startedAt ?? "";
-              const right = b.endedAt ?? b.startedAt ?? "";
-              return right.localeCompare(left);
-            })
+          .filter((session) => session.studentId === studentId)
+          .sort((a, b) => {
+            const left = a.endedAt ?? a.startedAt ?? "";
+            const right = b.endedAt ?? b.startedAt ?? "";
+            return right.localeCompare(left);
+          })
         : [],
     [allSessions, studentId]
   );
@@ -429,8 +429,8 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
     () =>
       studentId
         ? store.masteryResults
-            .filter((result) => result.studentId === studentId)
-            .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+          .filter((result) => result.studentId === studentId)
+          .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
         : [],
     [store.masteryResults, studentId]
   );
@@ -443,10 +443,10 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
   const studentProfile = studentId
     ? getOrCreateProfile(store.studentProfiles, studentId)
     : {
-        studentId: "guest",
-        levelPoints: 0,
-        streak: 0,
-      };
+      studentId: "guest",
+      levelPoints: 0,
+      streak: 0,
+    };
 
   const gradeUnits = useMemo(() => {
     const recommended = getUnitsForGrade(gradeLevel);
@@ -496,8 +496,8 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
       const masteryPercent =
         subjectProgress.length > 0
           ? Math.round(
-              subjectProgress.reduce((sum, entry) => sum + entry.masteryPercent, 0) / subjectProgress.length
-            )
+            subjectProgress.reduce((sum, entry) => sum + entry.masteryPercent, 0) / subjectProgress.length
+          )
           : 0;
 
       const inProgressCount = subjectProgress.filter(
@@ -629,59 +629,61 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
     }
 
     const now = new Date().toISOString();
+    const current = readStore();
 
-    return updateStore((current) => {
-      let customUnitIds: string[] = [];
-      let customUnits = current.customUnits;
-      let customTopics = current.customTopics;
+    let customUnitIds: string[] = [];
+    let customUnits = current.customUnits;
+    let customTopics = current.customTopics;
 
-      if (input.customUnitTitle && input.customUnitTitle.trim().length > 0) {
-        const unitId = `custom-${crypto.randomUUID()}`;
-        const topicId = `custom-topic-${crypto.randomUUID()}`;
+    if (input.customUnitTitle && input.customUnitTitle.trim().length > 0) {
+      const unitId = `custom-${generateId()}`;
+      const topicId = `custom-topic-${generateId()}`;
 
-        const newUnit: KnowledgeUnit = {
-          id: unitId,
-          subjectKey: input.subjectKey,
-          title: input.customUnitTitle.trim(),
-          description: "Unidade personalizada pelo aluno.",
-          gradeRange: [1, 12],
-          prerequisites: [],
-        };
-
-        const newTopic: KnowledgeTopic = {
-          id: topicId,
-          unitId,
-          title: input.customUnitTitle.trim(),
-          description: "Topico personalizado.",
-        };
-
-        customUnitIds = [unitId];
-        customUnits = [newUnit, ...current.customUnits];
-        customTopics = [newTopic, ...current.customTopics];
-      }
-
-      const finalUnitIds = [...new Set([...input.unitIds, ...customUnitIds])];
-      const fallbackTitle = finalUnitIds[0] ? getKnowledgeUnit(finalUnitIds[0])?.title : undefined;
-
-      const track: StudentTrack = {
-        id: crypto.randomUUID(),
-        studentId,
+      const newUnit: KnowledgeUnit = {
+        id: unitId,
         subjectKey: input.subjectKey,
-        title: input.title?.trim() || fallbackTitle || "Nova trilha",
-        focusMode: input.focusMode,
-        objective: input.objective,
-        unitIds: finalUnitIds,
-        createdAt: now,
-        isCustom: true,
+        title: input.customUnitTitle.trim(),
+        description: "Unidade personalizada pelo aluno.",
+        gradeRange: [1, 12],
+        prerequisites: [],
       };
 
-      return {
-        ...current,
-        tracks: [track, ...current.tracks],
-        customUnits,
-        customTopics,
+      const newTopic: KnowledgeTopic = {
+        id: topicId,
+        unitId,
+        title: input.customUnitTitle.trim(),
+        description: "Topico personalizado.",
       };
+
+      customUnitIds = [unitId];
+      customUnits = [newUnit, ...current.customUnits];
+      customTopics = [newTopic, ...current.customTopics];
+    }
+
+    const finalUnitIds = [...new Set([...input.unitIds, ...customUnitIds])];
+    const fallbackTitle = finalUnitIds[0] ? getKnowledgeUnit(finalUnitIds[0])?.title : undefined;
+
+    const track: StudentTrack = {
+      id: generateId(),
+      studentId,
+      subjectKey: input.subjectKey,
+      title: input.title?.trim() || fallbackTitle || "Nova trilha",
+      focusMode: input.focusMode,
+      objective: input.objective,
+      unitIds: finalUnitIds,
+      createdAt: now,
+      isCustom: true,
+    };
+
+    writeStore({
+      ...current,
+      tracks: [track, ...current.tracks],
+      customUnits,
+      customTopics,
     });
+
+    await queryClient.invalidateQueries({ queryKey: [QUERY_KEY] });
+    return track;
   };
 
   const createPracticeSession = async (config: SessionPlanConfig) => {
@@ -695,7 +697,7 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
       throw new Error("Nao foi possivel criar plano de sessao");
     }
 
-    const sessionId = crypto.randomUUID();
+    const sessionId = generateId();
     const session: PracticeSession = {
       id: sessionId,
       studentId,
@@ -712,7 +714,7 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
     };
 
     const items: PracticeItem[] = plan.items.map((item) => ({
-      id: crypto.randomUUID(),
+      id: generateId(),
       sessionId,
       type: item.type,
       prompt: item.prompt,
@@ -770,7 +772,7 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
 
     const isCorrect = evaluateAnswer(item, input.answer);
     const attempt: PracticeAttempt = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       sessionId: input.sessionId,
       itemId: input.itemId,
       answer: input.answer,
@@ -981,7 +983,7 @@ export const useKnowledge = (studentId?: string, gradeYear?: string | null) => {
     const passed = score >= 80;
 
     const result: MasteryResult = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       studentId,
       unitId,
       score,

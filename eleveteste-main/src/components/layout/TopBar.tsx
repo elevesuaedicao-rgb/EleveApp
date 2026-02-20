@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { LogOut, MessageCircle, User } from 'lucide-react';
+import { LogOut, MessageCircle, User, Bell, Sun, Moon } from 'lucide-react';
 import { UserRole } from '../../types';
 import { useSchedule } from '../../context/ScheduleContext';
 import { useTheme } from '../../context/ThemeContext';
@@ -8,6 +8,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useGuardianPortal } from '@/hooks/useGuardianPortal';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { cn } from '@/lib/utils';
 
 interface TopBarProps {
   hideLogoOnDesktop?: boolean;
@@ -65,17 +66,20 @@ export const TopBar: React.FC<TopBarProps> = ({ hideLogoOnDesktop = false }) => 
     .toUpperCase();
 
   return (
-    <header className="sticky top-0 z-30 w-full backdrop-blur-xl bg-surface/80 border-b border-border">
-      <div className="w-full px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-30 w-full backdrop-blur-xl bg-surface/80 border-b border-border/50 supports-[backdrop-filter]:bg-surface/50">
+      <div className="w-full px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <div
-          className={`flex items-center gap-1.5 cursor-pointer group ${hideLogoOnDesktop ? 'md:hidden' : ''}`}
+          className={`flex items-center gap-3 cursor-pointer group ${hideLogoOnDesktop ? 'md:hidden' : ''}`}
           onClick={() => navigate('/')}
         >
-          <div className="w-9 h-9 bg-foreground rounded-lg transform -rotate-6 group-hover:rotate-0 transition-transform duration-300 flex items-center justify-center shadow-sm">
-            <span className="text-background font-extrabold text-xl font-sans leading-none mt-0.5">E</span>
+          <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
+            <div className="absolute inset-0 bg-primary/20 rounded-xl rotate-3 group-hover:rotate-6 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-primary rounded-xl -rotate-3 group-hover:-rotate-6 transition-transform duration-300 flex items-center justify-center shadow-lg shadow-primary/20">
+              <span className="text-primary-foreground font-black text-xl font-sans leading-none mt-0.5">E</span>
+            </div>
           </div>
-          <span className="text-2xl font-black tracking-tighter text-foreground transform -rotate-1 origin-left group-hover:rotate-0 transition-transform">
-            LEVE
+          <span className="text-2xl font-black tracking-tighter text-foreground transform origin-left transition-all duration-300 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+            ELEVE
           </span>
         </div>
 
@@ -84,31 +88,31 @@ export const TopBar: React.FC<TopBarProps> = ({ hideLogoOnDesktop = false }) => 
         <div className="flex items-center gap-3 sm:gap-4">
           <button
             onClick={toggleTheme}
-            className="w-10 h-10 rounded-full bg-transparent md:hidden flex items-center justify-center hover:bg-muted transition-colors"
+            className="w-10 h-10 rounded-full bg-transparent md:hidden flex items-center justify-center hover:bg-muted text-muted-foreground transition-colors"
             title="Alternar tema"
           >
-            {theme === 'light' ? '??' : '??'}
+            {theme === 'light' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
           </button>
 
           {activeRole === 'parent' && (
             <button
               onClick={openGuardianWhatsapp}
               disabled={!teacherPhoneE164}
-              className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center hover:bg-muted transition-colors disabled:opacity-50"
+              className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
               title="Abrir WhatsApp do professor"
             >
-              <MessageCircle className="w-4 h-4" />
+              <MessageCircle className="w-5 h-5" />
             </button>
           )}
 
           <div className="relative">
             <button
               onClick={() => setShowNotifs(!showNotifs)}
-              className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center hover:bg-muted transition-colors relative"
+              className="w-10 h-10 rounded-full bg-surface border border-border flex items-center justify-center hover:bg-muted text-muted-foreground hover:text-foreground transition-colors relative"
             >
-              ??
+              <Bell className="w-5 h-5" />
               {myNotifications.length > 0 && (
-                <span className="absolute top-0 right-0 w-3 h-3 bg-destructive rounded-full border-2 border-surface" />
+                <span className="absolute top-2 right-2.5 w-2 h-2 bg-destructive rounded-full border border-surface" />
               )}
             </button>
 

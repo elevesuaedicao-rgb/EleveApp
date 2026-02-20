@@ -4,7 +4,8 @@ import { NAV_ITEMS } from './NavigationConfig';
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '@/hooks/useAuth';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User } from 'lucide-react';
+import { User, ChevronLeft, Moon, Sun, LogOut } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface SidebarProps {
   role: string;
@@ -42,67 +43,86 @@ export const Sidebar: React.FC<SidebarProps> = ({ role, isCollapsed, onToggle })
   const profilePath = profileRoutes[role];
 
   return (
-    <aside 
-      className={`
-        hidden md:flex flex-col h-screen fixed left-0 top-0 bg-surface border-r border-border z-40 transition-all duration-300
-        ${isCollapsed ? 'w-20' : 'w-64'}
-      `}
+    <aside
+      className={cn(
+        "hidden md:flex flex-col h-screen fixed left-0 top-0 z-40 transition-all duration-300 ease-in-out border-r border-border/50",
+        "bg-surface/80 backdrop-blur-xl supports-[backdrop-filter]:bg-surface/50",
+        isCollapsed ? 'w-20' : 'w-72'
+      )}
     >
-      <div 
-        className={`h-16 flex items-center px-4 border-b border-border cursor-pointer relative ${isCollapsed ? 'justify-center' : ''}`} 
+      {/* Header / Logo */}
+      <div
+        className={cn(
+          "h-20 flex items-center px-6 border-b border-border/50 cursor-pointer relative",
+          isCollapsed ? 'justify-center px-0' : ''
+        )}
         onClick={() => navigate('/')}
       >
-        <div className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-foreground rounded-lg transform -rotate-6 group-hover:rotate-0 transition-transform duration-300 flex items-center justify-center shadow-sm shrink-0">
-            <span className="text-background font-extrabold text-lg font-sans leading-none mt-0.5">E</span>
+        <div className="flex items-center gap-3 group">
+          <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
+            <div className="absolute inset-0 bg-primary/20 rounded-xl rotate-3 group-hover:rotate-6 transition-transform duration-300" />
+            <div className="absolute inset-0 bg-primary rounded-xl -rotate-3 group-hover:-rotate-6 transition-transform duration-300 flex items-center justify-center shadow-lg shadow-primary/20">
+              <span className="text-primary-foreground font-black text-xl font-sans leading-none mt-0.5">E</span>
+            </div>
           </div>
-          <span 
-            className={`
-              text-xl font-black tracking-tighter text-foreground transform -rotate-1 origin-left group-hover:rotate-0 transition-all duration-300
-              ${isCollapsed ? 'opacity-0 w-0 overflow-hidden' : 'opacity-100 w-auto'}
-            `}
+
+          <span
+            className={cn(
+              "text-2xl font-black tracking-tighter text-foreground transform origin-left transition-all duration-300 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70",
+              isCollapsed ? 'opacity-0 w-0 overflow-hidden scale-90' : 'opacity-100 w-auto scale-100'
+            )}
           >
-            LEVE
+            ELEVE
           </span>
         </div>
       </div>
 
-      <button 
+      {/* Collapse Toggle */}
+      <button
         onClick={(e) => { e.stopPropagation(); onToggle(); }}
-        className="absolute -right-4 top-1/2 transform -translate-y-1/2 bg-surface border border-border rounded-full w-8 h-8 flex items-center justify-center text-muted-foreground hover:text-primary transition-colors shadow-md z-50 focus:outline-none"
+        className="absolute -right-3 top-9 transform bg-surface border border-border shadow-sm rounded-full w-6 h-6 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all z-50 focus:outline-none hover:scale-110"
         title={isCollapsed ? "Expandir" : "Recolher"}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}>
-          <path d="M15 18l-6-6 6-6" />
-        </svg>
+        <ChevronLeft className={cn("w-3 h-3 transition-transform duration-300", isCollapsed && "rotate-180")} />
       </button>
 
-      <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1 custom-scrollbar">
+      {/* Navigation Items */}
+      <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1.5 custom-scrollbar">
         {items.map((item) => {
           const isRoleRoot = item.path === `/${role}` || item.path === `/app/${role}`;
           const isActive = location.pathname === item.path || (!isRoleRoot && location.pathname.startsWith(item.path));
-          
+
           return (
             <button
               key={item.path}
               onClick={() => navigate(item.path)}
               title={isCollapsed ? item.label : ''}
-              className={`
-                w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group
-                ${isActive 
-                  ? 'bg-foreground text-background shadow-md' 
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'}
-                ${isCollapsed ? 'justify-center' : ''}
-              `}
+              className={cn(
+                "w-full flex items-center px-3 py-3 rounded-xl transition-all duration-200 group relative overflow-hidden",
+                isActive
+                  ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25 font-medium'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                isCollapsed ? 'justify-center px-0 gap-0' : 'gap-3'
+              )}
             >
-              <span className={`text-xl shrink-0 ${isActive ? 'scale-110' : 'group-hover:scale-110'} transition-transform`}>
+              {/* Active Background Glow */}
+              {isActive && (
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-20 pointer-events-none" />
+              )}
+
+              <span className={cn(
+                "transition-transform duration-300 shrink-0",
+                isActive ? 'scale-110' : 'group-hover:scale-110',
+                isCollapsed ? '' : ''
+              )}>
                 {item.icon}
               </span>
-              <span 
-                className={`
-                  font-medium text-sm whitespace-nowrap overflow-hidden transition-all duration-300
-                  ${isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100'}
-                `}
+
+              <span
+                className={cn(
+                  "text-sm whitespace-nowrap overflow-hidden transition-all duration-300",
+                  isCollapsed ? 'w-0 opacity-0 hidden' : 'w-auto opacity-100 ml-3'
+                )}
               >
                 {item.label}
               </span>
@@ -111,50 +131,56 @@ export const Sidebar: React.FC<SidebarProps> = ({ role, isCollapsed, onToggle })
         })}
       </nav>
 
-      <div className="p-4 border-t border-border space-y-3">
-        <button 
+      {/* Footer / User Profile */}
+      <div className="p-4 border-t border-border/50 space-y-3 bg-surface/50 backdrop-blur-sm">
+        <button
           onClick={toggleTheme}
-          className={`
-            w-full flex items-center gap-3 px-3 py-2 rounded-xl bg-muted text-muted-foreground hover:bg-accent transition-colors
-            ${isCollapsed ? 'justify-center' : 'justify-between'}
-          `}
+          className={cn(
+            "w-full flex items-center px-3 py-2.5 rounded-xl transition-all duration-300",
+            "text-muted-foreground hover:bg-muted hover:text-foreground border border-transparent hover:border-border",
+            isCollapsed ? 'justify-center gap-0' : 'justify-between gap-3'
+          )}
           title={isCollapsed ? `Modo ${theme === 'light' ? 'Claro' : 'Escuro'}` : ''}
         >
-          <span 
-            className={`
-              text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300
-              ${isCollapsed ? 'w-0 opacity-0 hidden' : 'w-auto opacity-100 block'}
-            `}
+          <span
+            className={cn(
+              "text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-300",
+              isCollapsed ? 'w-0 opacity-0 hidden' : 'w-auto opacity-100 ml-3'
+            )}
           >
             Modo {theme === 'light' ? 'Claro' : 'Escuro'}
           </span>
-          <span className="text-lg shrink-0">{theme === 'light' ? '☀️' : '🌙'}</span>
+          {theme === 'light' ? <Sun className="w-5 h-5 shrink-0" /> : <Moon className="w-5 h-5 shrink-0" />}
         </button>
 
         <button
           type="button"
           onClick={() => profilePath && navigate(profilePath)}
           disabled={!profilePath}
-          className={`
-            w-full flex items-center gap-3 p-2 rounded-xl bg-muted border border-border transition-all duration-300 text-left
-            hover:bg-accent active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70
-            ${isCollapsed ? 'justify-center bg-transparent border-transparent' : ''}
-          `}
+          className={cn(
+            "w-full flex items-center gap-3 p-2 rounded-xl transition-all duration-300 text-left group",
+            "bg-muted/50 hover:bg-primary/5 hover:border-primary/20 border border-transparent",
+            isCollapsed ? 'justify-center bg-transparent p-0 hover:bg-transparent' : ''
+          )}
           title={profilePath ? 'Ir para perfil' : ''}
         >
-          <Avatar className="w-8 h-8 shrink-0">
+          <Avatar className={cn(
+            "w-9 h-9 shrink-0 border-2 border-background shadow-sm transition-transform group-hover:scale-105",
+            isCollapsed && "w-10 h-10"
+          )}>
             <AvatarImage src={profile?.avatar_url || undefined} alt={displayName} />
             <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">
               {initials || <User className="w-4 h-4" />}
             </AvatarFallback>
           </Avatar>
-          <div 
-            className={`
-              flex-1 overflow-hidden transition-all duration-300
-              ${isCollapsed ? 'w-0 opacity-0 hidden' : 'w-auto opacity-100 block'}
-            `}
+
+          <div
+            className={cn(
+              "flex-1 overflow-hidden transition-all duration-300",
+              isCollapsed ? 'w-0 opacity-0' : 'w-auto opacity-100 ml-3'
+            )}
           >
-            <p className="text-sm font-bold text-foreground truncate">{displayName}</p>
+            <p className="text-sm font-bold text-foreground truncate group-hover:text-primary transition-colors">{displayName}</p>
             <p className="text-xs text-muted-foreground capitalize truncate">
               {roleLabels[role] || role}
             </p>

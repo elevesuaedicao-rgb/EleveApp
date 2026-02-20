@@ -43,6 +43,7 @@ import { TeacherQuestionsPage } from './screens/teacher/TeacherQuestionsPage';
 import Welcome from './pages/Welcome';
 import Login from './pages/Login';
 import DevRoleSelect from './pages/DevRoleSelect';
+import { StudentAnalytics } from './screens/teacher/StudentAnalytics';
 import NotFound from './pages/NotFound';
 
 import RoleSelect from './pages/onboarding/RoleSelect';
@@ -169,6 +170,7 @@ const App = () => (
                     <Route path="/teacher/history" element={<TeacherDashboard />} />
                     <Route path="/teacher/notifications" element={<TeacherDashboard />} />
                     <Route path="/teacher/profile" element={<TeacherProfile />} />
+                    <Route path="/app/teacher/students/:studentId" element={<StudentAnalytics />} />
                   </Route>
 
                   <Route path="*" element={<NotFound />} />

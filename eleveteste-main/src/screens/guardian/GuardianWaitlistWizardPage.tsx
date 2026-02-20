@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
+import { generateId } from '@/lib/utils';
 
 interface WaitlistEntry {
   id: string;
@@ -56,7 +57,7 @@ export const GuardianWaitlistWizardPage: React.FC = () => {
   const joinQueue = () => {
     if (!studentId || !slotId) return;
     const newEntry: WaitlistEntry = {
-      id: crypto.randomUUID(),
+      id: generateId(),
       slotId,
       studentId,
       window: windowChoice,

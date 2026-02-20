@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DifficultyLevel, MoodType, TrainingType } from "@/data/trainingCatalog";
+import { generateId } from "@/lib/utils";
 
 const STORAGE_KEY = "eleveteste_training_sessions_v1";
 const QUERY_KEY = "training-sessions";
@@ -71,7 +72,7 @@ export const useTrainingSessions = (studentId?: string) => {
     const completedAt = payload.finishedAt ?? new Date().toISOString();
     const entry: TrainingSession = {
       ...payload,
-      id: crypto.randomUUID(),
+      id: generateId(),
       finishedAt: completedAt,
     };
     writeSessions([entry, ...current]);

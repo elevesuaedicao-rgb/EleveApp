@@ -8,109 +8,112 @@
 
 @layer base {
   :root {
-    /* Core Colors */
+    /* Core Colors - Vibrant & Premium */
     --background: 0 0% 98%;
-    --foreground: 0 0% 9%;
-    
+    --foreground: 240 10% 4%;
+    /* Darker, richer text */
+
     /* Surface - Cards, Modals */
     --surface: 0 0% 100%;
-    --surface-foreground: 0 0% 9%;
+    --surface-foreground: 240 10% 4%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 240 10% 4%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
+    --popover-foreground: 240 10% 4%;
 
-    /* Primary - Main Blue */
-    --primary: 217 91% 60%;
+    /* Primary - Vibrant Violet/Indigo */
+    --primary: 262 83% 58%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary */
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 9% 46%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 6% 10%;
 
     /* Muted */
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
 
     /* Accent */
-    --accent: 220 14% 96%;
-    --accent-foreground: 220 9% 20%;
+    --accent: 262 50% 97%;
+    --accent-foreground: 262 83% 40%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 60%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 262 83% 58%;
 
-    --radius: 0.75rem;
+    --radius: 1rem;
+    /* More rounded premium feel */
 
     /* Sidebar */
     --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 220 9% 46%;
-    --sidebar-primary: 0 0% 9%;
+    --sidebar-foreground: 240 4% 46%;
+    --sidebar-primary: 262 83% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 14% 96%;
-    --sidebar-accent-foreground: 0 0% 9%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 262 50% 97%;
+    --sidebar-accent-foreground: 262 83% 58%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 262 83% 58%;
 
-    /* Subject Colors */
+    /* Subject Colors - More Vivid */
     --subject-math: 217 91% 60%;
     --subject-physics: 271 81% 56%;
-    --subject-chemistry: 142 76% 36%;
-    --subject-portuguese: 45 93% 47%;
+    --subject-chemistry: 142 70% 45%;
+    --subject-portuguese: 35 90% 55%;
     --subject-english: 0 72% 51%;
 
     /* Status Colors */
-    --status-success: 142 76% 36%;
-    --status-warning: 45 93% 47%;
+    --status-success: 142 70% 45%;
+    --status-warning: 35 90% 55%;
     --status-error: 0 84% 60%;
     --status-info: 217 91% 60%;
   }
 
   .dark {
-    --background: 0 0% 7%;
-    --foreground: 0 0% 95%;
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
 
-    --surface: 0 0% 10%;
-    --surface-foreground: 0 0% 95%;
+    --surface: 240 10% 6%;
+    --surface-foreground: 0 0% 98%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 240 10% 6%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 217 91% 60%;
+    --primary: 262 83% 65%;
+    /* Slightly lighter for dark mode */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 9% 18%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 240 6% 12%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 220 9% 18%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 240 6% 12%;
+    --muted-foreground: 240 5% 65%;
 
-    --accent: 220 9% 18%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 262 50% 15%;
+    --accent-foreground: 0 0% 98%;
 
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 220 9% 18%;
-    --input: 220 9% 18%;
-    --ring: 217 91% 60%;
+    --border: 240 6% 12%;
+    --input: 240 6% 12%;
+    --ring: 262 83% 65%;
 
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 220 9% 65%;
-    --sidebar-primary: 217 91% 60%;
+    --sidebar-background: 240 10% 5%;
+    --sidebar-foreground: 240 5% 65%;
+    --sidebar-primary: 262 83% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 9% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 220 9% 15%;
-    --sidebar-ring: 217 91% 60%;
+    --sidebar-accent: 262 50% 15%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 6% 12%;
+    --sidebar-ring: 262 83% 65%;
   }
 }
 
@@ -126,21 +129,22 @@
 }
 
 @layer utilities {
+
   /* Custom scrollbar */
   .custom-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--muted));
     border-radius: 10px;
   }
-  
+
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--muted-foreground) / 0.4);
   }
@@ -150,7 +154,7 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
@@ -162,9 +166,19 @@
 
   /* Wave animation for emojis */
   @keyframes wave {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(20deg); }
-    75% { transform: rotate(-15deg); }
+
+    0%,
+    100% {
+      transform: rotate(0deg);
+    }
+
+    25% {
+      transform: rotate(20deg);
+    }
+
+    75% {
+      transform: rotate(-15deg);
+    }
   }
 
   .animate-wave {
@@ -177,16 +191,16 @@
   .animate-in {
     animation-fill-mode: both;
   }
-  
+
   .fade-in {
     animation-name: fadeIn;
   }
-  
+
   .slide-in-from-bottom-4 {
     --tw-enter-translate-y: 1rem;
     animation-name: slideInFromBottom;
   }
-  
+
   .slide-in-from-bottom-8 {
     --tw-enter-translate-y: 2rem;
     animation-name: slideInFromBottom;
@@ -227,8 +241,13 @@
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
 
   @keyframes slideInFromBottom {
@@ -236,6 +255,7 @@
       opacity: 0;
       transform: translateY(var(--tw-enter-translate-y, 1rem));
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -247,6 +267,7 @@
       opacity: 0;
       transform: translateX(var(--tw-enter-translate-x, 1rem));
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -258,9 +279,25 @@
       opacity: 0;
       transform: scale(0.95);
     }
+
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+
+  /* Custom Animations */
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
     }
   }
 }

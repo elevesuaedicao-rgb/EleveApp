@@ -21,22 +21,22 @@ export const AppShell: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary/20 selection:text-primary flex overflow-hidden">
-      
+
       {showNavigation && (
-        <Sidebar 
-          role={activeRole} 
-          isCollapsed={isSidebarCollapsed} 
-          onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)} 
+        <Sidebar
+          role={activeRole}
+          isCollapsed={isSidebarCollapsed}
+          onToggle={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         />
       )}
 
       <div className={`
         flex-1 flex flex-col min-h-screen transition-all duration-300 w-full max-w-[100vw] overflow-x-hidden
-        ${showNavigation ? (isSidebarCollapsed ? 'md:ml-20' : 'md:ml-64') : ''}
+        ${showNavigation ? (isSidebarCollapsed ? 'md:ml-20' : 'md:ml-72') : ''}
       `}>
-        
-        <TopBar hideLogoOnDesktop={showNavigation} />
-        
+
+        {location.pathname !== '/teacher/calendar' && <TopBar hideLogoOnDesktop={showNavigation} />}
+
         <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-in fade-in duration-500 pb-24 md:pb-8">
           <Outlet />
         </main>
