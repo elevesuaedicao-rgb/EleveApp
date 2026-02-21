@@ -366,6 +366,7 @@ const mergeUnitProgress = (
 };
 
 const resolveKnowledgeUnits = (store: KnowledgeStore) => [...KNOWLEDGE_UNITS, ...store.customUnits];
+const resolveKnowledgeTopics = (store: KnowledgeStore) => [...KNOWLEDGE_TOPICS, ...store.customTopics];
 
 import { generateId } from "@/lib/utils";
 
